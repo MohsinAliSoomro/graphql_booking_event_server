@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const { graphqlHTTP } = require("express-graphql");
 const { buildSchema } = require("graphql");
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -63,4 +64,11 @@ app.use(
   })
 );
 
-app.listen(4000, () => console.log("server is running on port of 4000"));
+mongoose
+  .connect("mongodb://127.0.0.1:27017/bookEvent", { useNewUrlParser: true,useUnifiedTopology:true })
+  .then(() => {
+    app.listen(4000, () => console.log("server is running on port of 4000"));
+  })
+  .catch((err) => console.log(err));
+
+
